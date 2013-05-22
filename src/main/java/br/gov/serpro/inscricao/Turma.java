@@ -7,7 +7,11 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
+import br.gov.frameworkdemoiselle.util.ResourceBundle;
+
 public class Turma {
+	
+	@Inject private ResourceBundle bundle;
 
 	@Inject 
 	private Logger logger; 
@@ -15,10 +19,17 @@ public class Turma {
 	private List<String> alunosMatriculados = new ArrayList<String>();
 
 	public void matricular(String aluno){
-		logger.info("Aluno matriculado com sucesso");
+		if (estaMatriculado(aluno) || alunosMatriculados.size() == 5) { 
+			throw new RuntimeException(); 
+		}
+		alunosMatriculados.add(aluno);
+		String string = bundle.getString("matricula.sucesso", aluno);
+		logger.info(string);
 	}
 	 
 	public boolean estaMatriculado(String aluno) {
-		return alunosMatriculados.contains(aluno);
+		
+		boolean contains = alunosMatriculados.contains(aluno);
+		return contains;
 	}
 }

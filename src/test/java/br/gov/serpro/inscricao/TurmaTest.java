@@ -20,13 +20,24 @@ public class TurmaTest {
 		Assert.assertTrue(turma.estaMatriculado("Santos Dumont"));
 	}
  
-	@Test
+	@Test(expected = RuntimeException.class) 
 	public void falhaAoTentarMatricularAlunoDuplicado(){
-		org.junit.Assert.fail();
+		turma.matricular("Santos Dumont");
+		turma.matricular("Santos Dumont");
 	}
  
+	@Test(expected = RuntimeException.class)
+	public void falhaAoTentarMatricularAlunoNaTurmaCheia() {
+		for (int i = 1; i <= 5; i++) {
+			turma.matricular("Aluno " + i);
+		}
+	 
+		turma.matricular("Aluno 6");
+	}
+	
 	@Test
-	public void falhaAoTentarMatricularAlunoNaTurmaCheia(){
+	public void falhar() {
+		org.junit.Assert.fail("sempre falhara");
 	}
 	
 }
