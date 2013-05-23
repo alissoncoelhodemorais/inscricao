@@ -1,5 +1,8 @@
 package br.gov.serpro.inscricao.exception;
 
+import br.gov.frameworkdemoiselle.exception.ApplicationException;
+
+@ApplicationException(rollback = true)
 public class TurmaException extends RuntimeException {
 
 	private static final long serialVersionUID = 4798107521040225258L;

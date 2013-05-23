@@ -31,5 +31,20 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- persistencia -->
+	    <dependency>
+			<groupId>br.gov.frameworkdemoiselle</groupId>
+			<artifactId>demoiselle-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>eclipselink</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+		</dependency>
+    
 	</dependencies>
 </project>
