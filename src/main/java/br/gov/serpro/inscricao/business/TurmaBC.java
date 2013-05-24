@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 
 import br.gov.frameworkdemoiselle.exception.ExceptionHandler;
 import br.gov.frameworkdemoiselle.lifecycle.Startup;
+import br.gov.frameworkdemoiselle.security.RequiredPermission;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.frameworkdemoiselle.util.ResourceBundle;
@@ -31,6 +32,7 @@ public class TurmaBC {
 	private AlunoBC alunoBC;
 
 	@Transactional
+	@RequiredPermission(resource = "turma", operation = "matricular")
 	public void matricular(Aluno aluno) {
 		if (estaMatriculado(aluno) || obterAlunosMatriculados().size() == config.getCapacidadeTurma()) {
 			throw new TurmaException();
@@ -42,6 +44,7 @@ public class TurmaBC {
 		logger.info(string);
 	}
 
+	@RequiredPermission(resource = "turma", operation = "consultar")
 	public boolean estaMatriculado(Aluno aluno) {
 
 		boolean contains = obterAlunosMatriculados().contains(aluno);
