@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import br.gov.frameworkdemoiselle.junit.DemoiselleRunner;
+import br.gov.serpro.inscricao.business.TurmaBC;
 import br.gov.serpro.inscricao.entity.Aluno;
 import br.gov.serpro.inscricao.exception.TurmaException;
 
@@ -14,13 +15,8 @@ import br.gov.serpro.inscricao.exception.TurmaException;
 public class TurmaTest {
 	
 	@Inject
-	private Turma turma;
+	private TurmaBC turma;
 
-	@Test
-	public void aabraoDesejaUtilizarAltF11() {
-		org.junit.Assert.fail("sempre falhara, para usar o Alt+F11");
-	}
-		
 	@Test
 	public void matricularAlunoComSucesso(){
 		turma.matricular(new Aluno("Santos Dumont"));

@@ -1,22 +1,22 @@
-package br.gov.serpro.inscricao;
+package br.gov.serpro.inscricao.business;
 
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 
 import br.gov.frameworkdemoiselle.exception.ExceptionHandler;
-import br.gov.frameworkdemoiselle.stereotype.Controller;
+import br.gov.frameworkdemoiselle.lifecycle.Startup;
+import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.frameworkdemoiselle.util.ResourceBundle;
 import br.gov.serpro.inscricao.config.InscricaoConfig;
 import br.gov.serpro.inscricao.entity.Aluno;
 import br.gov.serpro.inscricao.exception.TurmaException;
 
-@Controller
-public class Turma {
+@BusinessController
+public class TurmaBC {
 
 	@Inject
 	private ResourceBundle bundle;
@@ -26,9 +26,9 @@ public class Turma {
 
 	@Inject
 	private Logger logger;
-	
+
 	@Inject
-	private EntityManager em;
+	private AlunoBC alunoBC;
 
 	@Transactional
 	public void matricular(Aluno aluno) {
@@ -36,7 +36,7 @@ public class Turma {
 			throw new TurmaException();
 		}
 		
-		em.persist(aluno);
+		alunoBC.insert(aluno);
 		
 		String string = bundle.getString("matricula.sucesso", aluno.getNome());
 		logger.info(string);
@@ -49,12 +49,17 @@ public class Turma {
 	}
 
 	public List<Aluno> obterAlunosMatriculados() {
-		return em.createQuery("select a from Aluno a").getResultList();
+		return alunoBC.findAll();
 	}
 
 	@ExceptionHandler
 	public void tratar(TurmaException e) {
 		logger.warn(bundle.getString("matricula.erro"));
 		throw e;
+	}
+	
+	@Startup
+	public void iniciar() {
+		logger.info("iniciando a app inscricao ...");
 	}
 }
